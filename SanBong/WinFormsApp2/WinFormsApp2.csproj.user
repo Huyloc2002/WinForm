@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Dasdboash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dat_san.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormDoanhthu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Formgiasan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormPDF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FromThongtin_Tk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

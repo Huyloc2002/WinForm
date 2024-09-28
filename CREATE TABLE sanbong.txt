@@ -1,0 +1,75 @@
+CREATE TABLE sanbong (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    TenSan VARCHAR(255) NOT NULL,   -- Name of the property
+    DiaChi VARCHAR(255) NOT NULL,   -- Address of the property
+    GiaThue DECIMAL(10, 2) NOT NULL, -- Rental price
+    TrangThai ENUM('Có sẵn', 'Thuê', 'Bảo trì') NOT NULL -- Status of the property
+);
+CREATE TABLE quan_ly (
+    quan_ly_id INT AUTO_INCREMENT PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    so_dien_thoai VARCHAR(15),
+    mat_khau VARCHAR(255) NOT NULL,  -- Lưu trữ mật khẩu đã được mã hóa
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE khach_hang (
+    khach_hang_id INT AUTO_INCREMENT PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    so_dien_thoai VARCHAR(15),
+    dia_chi TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    quan_ly_id INT,
+    FOREIGN KEY (quan_ly_id) REFERENCES quan_ly(quan_ly_id)
+);
+CREATE TABLE phieu_dat_san (
+    phieu_id INT AUTO_INCREMENT PRIMARY KEY,
+    khach_hang_id INT,
+    id INT,
+    ngay_dat DATE NOT NULL,
+    gio_bat_dau TIME NOT NULL,
+    gio_ket_thuc TIME NOT NULL,
+    tong_tien DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (khach_hang_id) REFERENCES khach_hang(khach_hang_id),
+    FOREIGN KEY (id) REFERENCES sanbong(id)
+);
+CREATE TABLE chi_tiet_phieu_dat (
+    chi_tiet_id INT AUTO_INCREMENT PRIMARY KEY,
+    phieu_id INT,
+    so_luong INT NOT NULL,
+    gia_phan_bo DECIMAL(10, 2) NOT NULL,
+    id INT,
+    FOREIGN KEY (id) REFERENCES sanbong(id),
+    FOREIGN KEY (phieu_id) REFERENCES phieu_dat_san(phieu_id)
+);
+CREATE TABLE doanhthu (
+    doanhthu_id INT AUTO_INCREMENT PRIMARY KEY,
+    phieu_id INT,
+    khach_hang_id INT,
+    tong_doanhthu DECIMAL(10, 2) NOT NULL,
+    ngay_doanhthu DATE NOT NULL,
+    FOREIGN KEY (phieu_id) REFERENCES phieu_dat_san(phieu_id),
+    FOREIGN KEY (khach_hang_id) REFERENCES khach_hang(khach_hang_id)
+);
+INSERT INTO CREATE TABLE doanhthu (phieu_id,khach_hang_id,tong_doanhthu,ngay_doanhthu)
+VALUES(1,1,200000000,'2024-09-09');
+
+INSERT INTO sanbong(TenSan,DiaChi,GiaThue,TrangThai) VALUES('san 1','777 đường thạch bàn',20000000,'có sẵn');
+
+
+INSERT INTO khach_hang (ho_ten, email, so_dien_thoai, dia_chi) 
+VALUES ('Nguyễn Văn A', 'nguyen.a@example.com', '0901234567', '456 Đường DEF');
+
+-- Thêm phiếu đặt sân
+INSERT INTO phieu_dat_san (khach_hang_id, id, ngay_dat, gio_bat_dau, gio_ket_thuc, tong_tien) 
+VALUES (1, 1, '2024-08-21', '10:00:00', '12:00:00', 2000.00);
+
+-- Thêm chi tiết phiếu đặt sân
+INSERT INTO chi_tiet_phieu_dat (phieu_id, so_luong, gia_phan_bo,id) 
+VALUES (1, 1, 2000.00,1);
+
+-- Thêm quản lý
+INSERT INTO quan_ly (ho_ten, email, so_dien_thoai, mat_khau) 
+VALUES ('Trần Văn B', 'tran.b@example.com', '0912345678', 'hashed_password');
